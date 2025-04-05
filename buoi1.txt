@@ -1,9 +1,0 @@
-<p> : ghi van bang
-<br>: xuong dong // khong can the dong
-<div>: de chia tung phan trong trang // vd Muc I: gom nhung y gi, Muc II gom nhung y gi
-<ul> :dau .  muc lon 
-    <li> : danh dau cac dau . nho dung truoc
-<ol> : 
-    <li> : danh dau bang so phia truoc
-// <ul> <li> di voi nhau
-<img sorc=""/>
