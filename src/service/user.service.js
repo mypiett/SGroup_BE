@@ -1,24 +1,49 @@
-const fs = require('fs');
-const path = require('path');
+const userService = require('../database/index');
 
-const usersFilePath = path.join(__dirname, '..', 'database', 'user.json');
-
-function loadUsers() {
-    try {
-        const data = fs.readFileSync(usersFilePath, 'utf8');
-        return JSON.parse(data); 
-    } catch (err) {
-        console.error('Error reading file:', err);
-        return []; 
+class UserService{
+    getAllUsers = ()=>{
+        const mockUser = userService.loadUsers();
+        return mockUser;
     }
+
+    getUserById = (id)=>{
+        const mockUser = userService.loadUsers();
+        return mockUser.find((user)=>user.id=== parseInt(id));
+    }
+
+    createUser = (userName) =>{
+        const mockUser = userService.loadUsers();
+        const { name } = userName;
+        const user = {
+            id: mockUser.length + 1,
+            name: name
+        };
+        mockUser.push(user);
+        userService.saveUsers(mockUser);
+        return user;
+    }
+
+    updateUser = (id, userName)=>{
+        const mockUser = userService.loadUsers();
+        const userId = mockUser.findIndex((user)=>user.id === parseInt(id));
+        if (userId === -1) return null;
+        else{
+            mockUser[userId].name =  userName || mockUser[userId].name;
+            userService.saveUsers(mockUser);
+            return mockUser[userId];
+        }
+    }
+
+    deleteUser = (id) =>{
+        const mockUser = userService.loadUsers();
+        const  userId = mockUser.findIndex((u) => u.id === parseInt(id));
+        if (userId === -1) return false;
+        else{
+            mockUser.splice(userId,1);
+            userService.saveUsers(mockUser);
+            return true;
+        } 
+    } 
 }
 
-function saveUsers(users) {
-    try {
-        fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2)); 
-    } catch (err) {
-        console.error('Error writing file:', err);
-    }
-}
-
-module.exports = { loadUsers, saveUsers }; 
+module.exports = { UserService };

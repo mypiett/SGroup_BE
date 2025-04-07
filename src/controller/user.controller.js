@@ -1,67 +1,56 @@
-const express = require('express');
-const userService = require('../service/user.service');
-const router = express.Router(); 
+const { UserService } = require('../service/user.service');
 
-let mockUser = userService.loadUsers();
+class UserController{
+    constructor(){
+        this.userService = new UserService();
+    }
 
-router.get('/',(req,res) =>{
-    res.json(mockUser);
-})
+    getAllUsers = (req, res) =>{
+        const users=this.userService.getAllUsers();
+        res.status(200).json(users);
+    }
 
-router.get('/:id',(req,res)=>{
-    const user = mockUser.find((u)=>u.id===Number(req.params.id))
-    if (user) res.send(user);
-    else res.status(404).send({message:"User not found"});    
-})
+    getUserById = (req, res) =>{
+        const user = this.userService.getUserById(req.params.id);
+        if (user) res.status(200).json(user);
+        else res.status(404).send({message:"User not found"}); 
+    }
 
-router.post('/',(req,res)=>{
-    const { name } = req.body;
-    const user = {
-        id: mockUser.length + 1,
-        name: name
-    };
-    mockUser.push(user);
-    userService.saveUsers(mockUser);
-    res.status(201).json({
-        message: "User added successfully",
-        user: user,
-        all: mockUser
-
-    })
-})
-
-router.put('/:id',(req,res)=>{
-    const userId = mockUser.findIndex((u)=>u.id === Number(req.params.id));
-    if (userId === -1){
-        res.status(404).json({
-            message:"User not found"
+    createUser = (req,res) =>{
+        const newUser = this.userService.createUser(req.body);
+        res.status(201).json({
+            message: "User added successfully",
+            user: newUser
         })
     }
-    else{
-        mockUser[userId].name = req.body.name || mockUser[userId].name;
-        userService.saveUsers(mockUser);
-        res.status(200).json({
-            message:"Updated",
-            user: mockUser[userId],
-            all:mockUser
-        }); 
-    }   
-})
 
-router.delete('/:id',(req,res)=>{
-    const  userId = mockUser.findIndex((u) => u.id === Number(req.params.id));
-    if (userId === -1){
-        res.status(404).json({
-            message: "User not found"
-        })
-    }else{
-        mockUser.splice(userId,1);
-        userService.saveUsers(mockUser);
-        res.status(200).json({
-            message: "User deleted successfully",
-            all: mockUser
-        })
+    updateUser = (req, res) =>{
+        const user = this.userService.updateUser(req.params.id, req.body);
+        if (!user){
+            res.status(404).json({
+                message:"User not found"
+            })
+        }
+        else{
+            res.status(200).json({
+                message:"Updated",
+                user:this.updateUser
+            }); 
+        }      
     }
-})
 
-module.exports = router;
+    deleteUser = (req, res) =>{
+        const user = this.userService.deleteUser(req.params.id);
+        if (!user){
+            res.status(404).json({
+                message: "User not found"
+            })
+        }else{
+            res.status(200).json({
+                message: "User deleted successfully"
+            })
+        }
+    }
+}
+
+module.exports = { UserController };
