@@ -1,10 +1,33 @@
-const express = require('express');
-const app = express();
-const port = 3000;
-const routes = require('./routes'); 
+import express from 'express';
+import routes from './routes'; 
+import path from 'path';
+import templateEngineConfig from './config/templateEngine.config';
+import errorHandler from './middleware/errorHandler.middleware';
+import 'dotenv/config';
+import {connectDB} from './config/db.config';
 
-app.use(express.json());
-app.use(routes); 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+const startApp = () =>{
+    // app.use(express.urlencoded);
+    const app = express();
+    app.use(express.json());
+    const port = 3000;
+    templateEngineConfig(app);
+    app.use(express.static(path.join(__dirname,'public')));
+    app.use(routes); 
+    app.use(errorHandler);
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`);
+    });
+}
+
+
+(async () =>{
+    try{
+        await connectDB();
+        console.log('Connected to MongoDB');
+        startApp();
+    } catch(err){
+        console.error('Error connecting to MongoDB:', err);
+        process.exit(1);
+    }
+})();

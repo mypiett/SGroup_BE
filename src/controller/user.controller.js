@@ -1,67 +1,93 @@
-const express = require('express');
-const userService = require('../service/user.service');
-const router = express.Router(); 
+import UserService from '../service/user.service';
 
-let mockUser = userService.loadUsers();
+class UserController{
+    async getAllUsers(req, res,next){
+        try {
+            const users = await UserService.getAllUsers();
+            res.status(200).json({
+                success: true,
+                data: users
 
-router.get('/',(req,res) =>{
-    res.json(mockUser);
-})
-
-router.get('/:id',(req,res)=>{
-    const user = mockUser.find((u)=>u.id===Number(req.params.id))
-    if (user) res.send(user);
-    else res.status(404).send({message:"User not found"});    
-})
-
-router.post('/',(req,res)=>{
-    const { name } = req.body;
-    const user = {
-        id: mockUser.length + 1,
-        name: name
-    };
-    mockUser.push(user);
-    userService.saveUsers(mockUser);
-    res.status(201).json({
-        message: "User added successfully",
-        user: user,
-        all: mockUser
-
-    })
-})
-
-router.put('/:id',(req,res)=>{
-    const userId = mockUser.findIndex((u)=>u.id === Number(req.params.id));
-    if (userId === -1){
-        res.status(404).json({
-            message:"User not found"
-        })
+            })
+        }catch(err){
+            next(err);
+        }
     }
-    else{
-        mockUser[userId].name = req.body.name || mockUser[userId].name;
-        userService.saveUsers(mockUser);
-        res.status(200).json({
-            message:"Updated",
-            user: mockUser[userId],
-            all:mockUser
-        }); 
-    }   
-})
 
-router.delete('/:id',(req,res)=>{
-    const  userId = mockUser.findIndex((u) => u.id === Number(req.params.id));
-    if (userId === -1){
-        res.status(404).json({
-            message: "User not found"
-        })
-    }else{
-        mockUser.splice(userId,1);
-        userService.saveUsers(mockUser);
-        res.status(200).json({
-            message: "User deleted successfully",
-            all: mockUser
-        })
+    async getUserById(req,res,next){
+        try{
+            const userId = req.params.id;
+            const user= await UserService.getUserById(userId);
+            if (!user) {
+                res.status(404).json({
+                    success: false,
+                    message: 'User not found'
+                })
+            } else {
+                res.status(200).json({
+                    success: true,
+                    data: user
+                })
+            }
+        }
+        catch (err){
+            next(err);
+        }
     }
-})
 
-module.exports = router;
+    async createUser(req,res,next){
+        try{
+            const name = req.body.name;
+            const userId = await UserService.createUser(name);
+            res.status(200).json({
+                success: true,
+                data: userId
+            })
+        } catch (err){
+            next(err);
+        }
+    }
+
+    async updateUser(req,res,next){
+        try{
+            const userName = req.body.name;
+            const userId = req.params.id;
+            const userUpdate = await UserService.updateUser(userName,userId);
+            if (!userUpdate) {
+                res.status(404).json({
+                    success: false,
+                    message: 'User not found'
+                })
+            } else {
+                res.status(200).json({
+                    success: true,
+                    data: userUpdate
+                })
+            }
+        } catch (err){
+            next(err);
+        }
+    }
+
+    async deleteUser(req,res,next){
+        try{
+            const userId = req.params.id;
+            const allUsers = await UserService.getAllUsers();
+            const userDeleted = await UserService.deleteUser(userId);
+            if (userDeleted == false) {
+                res.status(404).json({
+                    success: false,
+                    message: 'User not found'
+                })
+            } else {
+                res.status(200).json({
+                    success: true,
+                    data: allUsers
+                })
+            }
+        }catch (err){
+            next(err);
+        }
+    }
+}
+export default new UserController();
