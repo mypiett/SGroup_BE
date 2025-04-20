@@ -37,8 +37,8 @@ class UserController{
 
     async createUser(req,res,next){
         try{
-            const name = req.body.name;
-            const userId = await UserService.createUser(name);
+            const { name, email, password } = req.body;
+            const userId = await UserService.createUser(name,email,password);
             res.status(200).json({
                 success: true,
                 data: userId
@@ -50,9 +50,9 @@ class UserController{
 
     async updateUser(req,res,next){
         try{
-            const userName = req.body.name;
+            const { name, email, password} = req.body;
             const userId = req.params.id;
-            const userUpdate = await UserService.updateUser(userName,userId);
+            const userUpdate = await UserService.updateUser( name, email, password,userId);
             if (!userUpdate) {
                 res.status(404).json({
                     success: false,
@@ -82,7 +82,8 @@ class UserController{
             } else {
                 res.status(200).json({
                     success: true,
-                    data: allUsers
+                    message: 'Deleted successfully'
+                    // data: allUsers
                 })
             }
         }catch (err){
