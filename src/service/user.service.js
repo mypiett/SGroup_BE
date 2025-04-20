@@ -1,9 +1,9 @@
-import { getDB } from "../config/db.config"
+import UserModel from "../model/user.model";
 
 class UserService{
     async getAllUsers(){
         try {
-            const users = await getDB().collection('users').find().toArray();
+            const users = await UserModel.getAllUsers();
             return users;
         }catch(err){
             throw err;
@@ -12,33 +12,26 @@ class UserService{
 
     async getUserById(userId){
         try {
-            const user= await getDB().collection('users').findOne({_id: Number(userId)});
+            const user= await UserModel.getUserById(userId);
             return user;
         }catch(err){
             throw err;
         }
     }
 
-    async createUser(name){
+    async createUser(name,email,password){
         try{
-            const user= await getDB().collection('users').insertOne({
-                name,
-                _id: await getDB().collection('users').countDocuments() +1
-            });
-            return this.getUserById(user.insertedId);
-            // return user;
+            const user= await UserModel.createUser(name,email,password);
+            return user;
         }catch(err){
             throw err;
         }
     }
 
-    async updateUser(userName,userId){
+    async updateUser(userName,userEmail,userPassword,userId){
         try{
-            const user = await getDB().collection('users').updateOne(
-                {_id: Number(userId)},
-                {$set: {name: userName}}
-            );
-            return this.getUserById(userId);
+            const user = await UserModel.updateUser(userName,userEmail,userPassword,userId);
+            return user;
         }catch(err){
             throw err;
         }
@@ -46,13 +39,7 @@ class UserService{
 
     async deleteUser(userId){
         try{
-            const result = await getDB().collection('users').deleteOne(
-                {_id: Number(userId)}
-            );
-            if (result.deletedCount === 0) {
-                return false;
-            }
-            return true;
+            return await UserModel.deleteUser(userId);
         } catch (err){
             throw err;
         }
