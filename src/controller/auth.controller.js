@@ -1,5 +1,6 @@
 import AuthService from "../service/auth.service.js"
 import HashProvider from '../providers/hash.provider.js'
+import authService from "../service/auth.service.js";
 
 class AuthController {
     async register(req, res, next) {
@@ -40,6 +41,42 @@ class AuthController {
             })
         }catch(err){
             next(err);
+        }
+    }
+
+    async forgotPassword(req,res,next){
+        try{
+            const {email} = req.body;
+
+            const check = await authService.forgotPassword(email);
+
+            if (check){
+                return res.status(200).json({
+                    success: true,
+                    message: 'Reset password email sent successfully'
+                });
+            }
+        } catch (error){
+            next(error);
+        }
+    }
+
+    async resetPassword(req, res, next){
+        try{
+            const {email, resetPasswordToken, newPassword} = req.body;
+            const check = await authService.resetPassword(email, resetPasswordToken, newPassword);
+            
+            if (check) {
+                return res.status(200).json({
+                    success:true,
+                    message: 'Reset password successfully'
+                });
+            }
+        }catch (error){
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            })
         }
     }
     

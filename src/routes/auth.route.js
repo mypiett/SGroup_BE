@@ -13,4 +13,6 @@ route.post(
 );
 route.post("/login", ValidateMiddleware.validateEmail, authController.login)
 route.get("/getMe", verifyMiddleware.checkAuth, authController.getMe)
+route.post('/forgot-password', ValidateMiddleware.validateEmail,authController.forgotPassword);
+route.post('/reset-password',ValidateMiddleware.validateEmail,authController.resetPassword);
 export default route;

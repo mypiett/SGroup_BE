@@ -16,9 +16,59 @@ const getUserByEmailAndPassword = async (email, password) => {
 const getUserById = async(id) => {
     return await getDB().collection("users").findOne({ _id: new ObjectId(id) });
 }
+
+const setResetPasswordToken = async(email, resetPasswordToken, resetPasswordExpiration) =>{
+    try{
+        const result = await getDB().collection("users").updateOne(
+            {email},
+            {$set:{
+                resetPasswordToken,
+                resetPasswordExpiration
+            }}
+        );
+        return result.matchedCount > 0;
+    }catch (error){
+        throw error;
+    }
+};
+
+const checkResetPasswordToken = async (email, resetPasswordToken) => {
+    try{
+        const result = await getDB().collection("users").findOne({
+            email,
+            resetPasswordToken,
+            resetPasswordExpiration: {$gt : new Date()}
+        });
+        return result;
+    }catch (error){
+        throw error;
+    }
+};
+
+const resetPassword = async(newPassword, email) =>{
+    try{
+        const result = await getDB().collection("users").updateOne(
+            {email},
+            {$set:{
+                    password: newPassword,
+                    resetPasswordToken: null,
+                    resetPasswordExpiration: null,
+                    lastResetPasswordDate: new Date()
+                }
+            }
+        );
+        return result.matchedCount > 0;
+    }catch (error){
+        throw error;
+    }
+};
+
 export default {
     getUserByEmail,
     createUser,
     getUserByEmailAndPassword,
-    getUserById
+    getUserById,
+    setResetPasswordToken,
+    checkResetPasswordToken,
+    resetPassword
 };
