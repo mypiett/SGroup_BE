@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "9e2b6407-9385-48a5-ba69-26b5615ab24b",
+		"name": "Poll",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43466526",
+		"_collection_link": "https://dark-comet-8853588.postman.co/workspace/Hu%E1%BB%B3nh-%C4%90o%C3%A0n-Thanh-Tuy%E1%BB%81n-'s-Works~1b571a5b-4d08-478e-8167-4f4d5d6884f9/collection/43466526-9e2b6407-9385-48a5-ba69-26b5615ab24b?action=share&source=collection_link&creator=43466526"
+	},
+	"item": [
+		{
+			"name": "polls",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls?page=..&limit=..",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls?page=2&limit=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls/6843e1a86ee2334e68a9b548",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"6843e1a86ee2334e68a9b548"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id/lock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls/6843e1a86ee2334e68a9b548/lock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"6843e1a86ee2334e68a9b548",
+						"lock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id/unlock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls/6843e1a86ee2334e68a9b548/unlock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"6843e1a86ee2334e68a9b548",
+						"unlock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id/option",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"text\": \"Them vao\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/polls/68374697509c6f88b34f6668/add-option",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"68374697509c6f88b34f6668",
+						"add-option"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id/option/:optionId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls/68374697509c6f88b34f6668/remove-option/68374697509c6f88b34f6664",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"68374697509c6f88b34f6668",
+						"remove-option",
+						"68374697509c6f88b34f6664"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id/vote",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"optionIds\": [\r\n    \"6843e1a86ee2334e68a9b546\",\r\n    \"6843e1a86ee2334e68a9b545\"    \r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/polls/6843e1a86ee2334e68a9b548/vote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"6843e1a86ee2334e68a9b548",
+						"vote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls/:id/unvote",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"optionId\": \"6843e1a86ee2334e68a9b545\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/polls/6843e1a86ee2334e68a9b548/unvote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"6843e1a86ee2334e68a9b548",
+						"unvote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Framework frontend bạn yêu thích?\",\r\n  \"description\": \"Khảo sát #6 dành cho lập trình viên.\",\r\n  \"options\": [\r\n    { \"text\": \"React\" },\r\n    { \"text\": \"Vue\" },\r\n    { \"text\": \"Angular\" },\r\n    { \"text\": \"Svelte\" }\r\n  ],\r\n  \"expiresAt\": \"2025-06-26T06:51:11.233Z\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/polls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "polls:/:id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
