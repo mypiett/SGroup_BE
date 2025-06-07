@@ -14,8 +14,27 @@ const getUserByEmailAndPassword = async (email, password) => {
 };
 
 const getUserById = async(id) => {
-    return await getDB().collection("users").findOne({ _id: new ObjectId(id) });
+    return await getDB().collection("users").findOne(
+        { _id: new ObjectId(id) },
+        { projection: { password: 0 } } 
+    );
 }
+
+const getAllUsers = async() => {
+    return await getDB().collection("users").find().toArray();
+}
+
+const updateUser = async(id, data) => {
+    return await getDB().collection("users").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: data }
+    );
+}
+
+const deleteUser = async(id) => {
+    return await getDB().collection("users").deleteOne({ _id: new ObjectId(id) });
+}
+
 
 const setResetPasswordToken = async(email, resetPasswordToken, resetPasswordExpiration) =>{
     try{
@@ -64,6 +83,9 @@ const resetPassword = async(newPassword, email) =>{
 };
 
 export default {
+    getAllUsers,
+    updateUser,
+    deleteUser,
     getUserByEmail,
     createUser,
     getUserByEmailAndPassword,

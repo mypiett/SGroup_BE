@@ -7,8 +7,6 @@ class HashProvider {
     }
 
     async compareHash(plainpassword, hashedPassword) {
-        // console.log("mat khau nguoi dung:", plainpassword);
-        // console.log("mat khau trong DB:", hashedPassword);
         const Check= await bcrypt.compare(plainpassword, hashedPassword);
         return Check;
     }

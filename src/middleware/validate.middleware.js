@@ -1,5 +1,5 @@
 import Joi from "joi";
-import AuthService from "../service/auth.service.js"; 
+import UserService from "../service/user.service.js"; 
 
 class ValidateMiddleware {
     async validateId(req, res, next) {
