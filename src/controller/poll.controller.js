@@ -139,7 +139,7 @@ class PollController {
     try {
       const userId = req.user?.id;
       await pollService.unvote(req.params.id, req.body.optionId, userId);
-      res.status(200).json({ success: true, message: "Unvoted successfully" });
+      res.status(200).json({ success: true, message: "Unvoted successfullyyy" });
     } catch (err) {
       next(err);
     }
