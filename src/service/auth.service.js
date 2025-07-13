@@ -1,4 +1,4 @@
-import userModel from "../model/user.model.js";
+import userModel from "../model/auth.model.js";
 import UserProvider from "../providers/user.provider.js";
 import emailProvider from "../providers/email.provider.js";
 import hashProvider from "../providers/hash.provider.js";

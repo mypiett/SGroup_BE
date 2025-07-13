@@ -1,6 +1,6 @@
-import UserService from "../service/user.service.js"
+import UserService from "../service/auth.service.js"
 import HashProvider from '../providers/hash.provider.js'
-import userService from "../service/user.service.js";
+import userService from "../service/auth.service.js";
 
 class UserController {
     async register(req, res, next) {

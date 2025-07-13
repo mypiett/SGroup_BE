@@ -1,9 +1,9 @@
 import { Router } from "express"
-import userRoute from "./user.route.js"
-import pollRoute from "./poll.route.js";
-
+import authRoute from "./auth.route.js"
+import courseRoute from "./course.route.js";
+import enrollmentRoute from './enrollment.route.js'
 const router = Router()
-router.use("/users", userRoute)
-router.use("/polls", pollRoute);
-
+router.use("/auth", authRoute)
+router.use("/courses", courseRoute);
+router.use("/",enrollmentRoute);
 export default router

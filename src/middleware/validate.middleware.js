@@ -1,5 +1,5 @@
 import Joi from "joi";
-import UserService from "../service/user.service.js"; 
+import UserService from "../service/auth.service.js"; 
 
 class ValidateMiddleware {
     async validateId(req, res, next) {
@@ -26,7 +26,6 @@ class ValidateMiddleware {
             }).unknown(true);
             
             await schema.validateAsync(req.body, { abortEarly: false });
-            console.log("t");
             next();
         } catch (err) {
             res.status(404).json({

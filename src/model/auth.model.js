@@ -6,7 +6,10 @@ const getUserByEmail = async (email) => {
 };
 
 const createUser = async (userData) => {
-    return await getDB().collection("users").insertOne(userData);
+    return await getDB().collection("users").insertOne({
+  ...userData,
+  createdAt: new Date()
+});
 };
 
 const getUserByEmailAndPassword = async (email, password) => {
